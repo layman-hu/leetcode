@@ -28,7 +28,7 @@
 </details>
 
 ```java
-public class Solution1 {
+public class Solution0001 {
     //1.哈希表
     public static int[] twoSum(int[] nums, int target) {
         int len = nums.length;
@@ -100,7 +100,7 @@ public class Solution1 {
 </details>
 
 ```java
-public class Solution2 {
+public class Solution0002 {
 
 
     //2.大数相加，链表
@@ -202,7 +202,7 @@ s 由英文字母、数字、符号和空格组成
 </details>
 
 ```java
-public class Solution3 {
+public class Solution0003 {
 
     //3. 无重复字符的最长子串
     /*
@@ -255,6 +255,123 @@ public class Solution3 {
 ```
 
 
+
+### 4.寻找两个正序数组的中位数
+
+#### 二分查找
+
+<details>
+<summary>题目</summary>
+<pre><code>
+给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
+算法的时间复杂度应该为 O(log (m+n)) 。
+示例 1：
+输入：nums1 = [1,3], nums2 = [2]
+输出：2.00000
+解释：合并数组 = [1,2,3] ，中位数 2
+示例 2：
+输入：nums1 = [1,2], nums2 = [3,4]
+输出：2.50000
+解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+示例 3：
+输入：nums1 = [0,0], nums2 = [0,0]
+输出：0.00000
+示例 4：
+输入：nums1 = [], nums2 = [1]
+输出：1.00000
+示例 5：
+输入：nums1 = [2], nums2 = []
+输出：2.00000
+提示：
+nums1.length == m
+nums2.length == n
+0 <= m <= 1000
+0 <= n <= 1000
+1 <= m + n <= 2000
+-106 <= nums1[i], nums2[i] <= 10^6
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+</code></pre>
+</details>
+
+```java
+public class Solution0004 {
+
+    //4. 寻找两个正序数组的中位数
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //二分查找
+        //将短的数组放在nums1中
+        if(nums1.length>nums2.length){
+            int[] temp = nums1;
+            nums1 = nums2;
+            nums2 = temp;
+        }
+
+        int m = nums1.length;
+        int n = nums2.length;
+
+        /*
+        考虑：把nums1和nums2想象成一个大数组nums
+        中位数：中位数定义，将一个集合分成两个子集，在中位数左边的子集一定小于中位数右边的子集
+        这里定义：左边子集数量等于右边子集数量，或者比右边多1。这样，求出了左子集，右子集自然就得出来了
+         */
+
+        /*
+        len = nums1.length+nums2.length=m+n;
+        nums含奇数个元素，左子集个数:(len/2)+1=(len+1)/2
+        nums含偶数个元素，左子集个数:len/2=(len+1)/2
+        所以nums不论奇偶，左子集个数都可表示为:(len+1)/2=(m+n+1)/2
+         */
+        int total_left_subset_num = (m+n+1)/2;
+
+        // 在 nums1 的区间 [0, m] 里查找恰当的分割线，
+        /*
+         使得 nums1[i - 1] <= nums2[j] && nums2[j - 1] <= nums1[i]
+
+         total_left_subset_num = i+j
+         i,j分别代表nums1和muns2的中位数下标
+         i-1和j-1表示在中位数左边，即元素分别在nums1和nums2的左子集
+         */
+
+        //定义nums1左右指针，当left和right重合时，搜寻结束
+
+        int nums1_left = 0;
+        int nums1_right = m;
+
+        while(nums1_left<nums1_right){
+            int i = nums1_left + (nums1_right-nums1_left+1)/2;
+            int j = total_left_subset_num - i;
+            if(nums1[i-1] > nums2[j]){
+                // 下一轮搜索的区间 [nums1_left, i - 1]
+                nums1_right = i-1;
+            }else {
+                // 下一轮搜索的区间 [i, nums1_right]
+                nums1_left = i;
+            }
+        }
+        int i = nums1_left;
+        int j = total_left_subset_num - i;
+
+        int nums1_left_max = ((i==0)?Integer.MIN_VALUE:nums1[i-1]);
+        int nums1_right_min = ((i==m)?Integer.MAX_VALUE:nums1[i]);
+        int nums2_left_max = ((j==0)?Integer.MIN_VALUE:nums2[j-1]);
+        int nums2_right_min = ((j==n)?Integer.MAX_VALUE:nums2[j]);
+
+        if((m+n)%2 == 1){
+            //奇数个，此时中位数在左子集的最后一个
+            return (nums1_left_max>nums2_left_max)?nums1_left_max:nums2_left_max;
+        } else {
+            //偶数个，此时中位数为左子集最大值与右子集最小值的均值
+            return 1.0*((nums1_left_max>nums2_left_max?nums1_left_max:nums2_left_max) +(nums1_right_min<nums2_right_min?nums1_right_min:nums2_right_min) )/2;
+        }
+    }
+
+    public static void main(String[] args){
+        int[] n1 = {1,2};
+        int[] n2 = {3,4};
+        System.out.println(findMedianSortedArrays(n1, n2));
+    }
+}
+```
 
 
 

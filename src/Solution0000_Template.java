@@ -1,6 +1,6 @@
 
 
-public class Solution0_Template {
+public class Solution0000_Template {
 
     //x.xxx
 

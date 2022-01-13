@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Solution1 {
+public class Solution0001 {
     //1.哈希表
     public static int[] twoSum(int[] nums, int target) {
         int len = nums.length;

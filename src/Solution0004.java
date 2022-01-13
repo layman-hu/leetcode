@@ -1,6 +1,6 @@
 
 
-public class Solution4 {
+public class Solution0004 {
 
     //4. 寻找两个正序数组的中位数
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {

@@ -1,6 +1,6 @@
 
 
-public class Solution2 {
+public class Solution0002 {
 
 
     //2.大数相加，链表

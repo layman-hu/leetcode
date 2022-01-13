@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class Solution3 {
+public class Solution0003 {
 
     //3. 无重复字符的最长子串
     /*
