@@ -373,9 +373,268 @@ public class Solution0004 {
 }
 ```
 
+### 5.最长回文序列
 
+#### 回文序列，中心点扩散
 
+<details>
+<summary>题目</summary>
+<pre><code>
+给你一个字符串 s，找到 s 中最长的回文子串。
+示例 1：
+输入：s = "babad"
+输出："bab"
+解释："aba" 同样是符合题意的答案。
+示例 2：
+输入：s = "cbbd"
+输出："bb"
+示例 3：
+输入：s = "a"
+输出："a"
+示例 4：
+输入：s = "ac"
+输出："a"
+提示：
+1 <= s.length <= 1000
+s 仅由数字和英文字母（大写和/或小写）组成
+</code></pre>
+</details>
 
+```java
+public class Solution0005 {
+
+    //5. 最长回文子串
+    public static String longestPalindrome(String s) {
+        int odd_palindrome_len = 1;//奇数回文序列长度
+        int odd_palindrome_index = 0;
+        int even_palindrome_len = 0;//偶数回文序列长度
+        int even_palindrome_index = 0;//偶回文序列中点下标，取左边下标
+
+        int len = s.length();
+        for(int i=0; i<len; i++){
+            int even_index_temp = i;
+            int even_len_temp = 0;
+            int interval = 0;
+            while (even_index_temp-interval>=0 && even_index_temp+1+interval<len){
+                if(s.charAt(even_index_temp-interval) == s.charAt(even_index_temp+1+interval)){
+                    even_len_temp += 2;
+                    interval++;
+                }else break;
+            }
+            if(even_len_temp > even_palindrome_len){
+                even_palindrome_len = even_len_temp;
+                even_palindrome_index = even_index_temp;
+            }
+
+            int odd_index_temp = i;
+            int odd_len_temp = 1;
+            int interval2 = 1;
+            while (odd_index_temp-interval2>=0 && odd_index_temp+interval2<len){
+                if(s.charAt(odd_index_temp-interval2) == s.charAt(odd_index_temp+interval2)){
+                    odd_len_temp += 2;
+                    interval2++;
+                }else break;
+            }
+            if(odd_len_temp > odd_palindrome_len){
+                odd_palindrome_len = odd_len_temp;
+                odd_palindrome_index = odd_index_temp;
+            }
+        }
+        if(odd_palindrome_len>even_palindrome_len){
+            return s.substring(odd_palindrome_index-(odd_palindrome_len/2),odd_palindrome_index+(odd_palindrome_len/2)+1);
+        }else {
+            return s.substring((even_palindrome_index+1)-(even_palindrome_len/2),even_palindrome_index+(even_palindrome_len/2)+1);
+        }
+
+    }
+
+    public static void main(String[] args){
+        System.out.println(longestPalindrome("ac"));
+    }
+}
+```
+
+### 6.Z 字形变换
+
+#### StringBuild用法
+
+<details>
+<summary>题目</summary>
+<pre><code>
+将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
+比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
+P   A   H   N
+A P L S I I G
+Y   I   R
+之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："PAHNAPLSIIGYIR"。
+请你实现这个将字符串进行指定行数变换的函数：
+string convert(string s, int numRows);
+示例 1：
+输入：s = "PAYPALISHIRING", numRows = 3
+输出："PAHNAPLSIIGYIR"
+示例 2：
+输入：s = "PAYPALISHIRING", numRows = 4
+输出："PINALSIGYAHRPI"
+解释：
+P     I    N
+A   L S  I G
+Y A   H R
+P     I
+示例 3：
+输入：s = "A", numRows = 1
+输出："A"
+提示：
+1 <= s.length <= 1000
+s 由英文字母（小写和大写）、',' 和 '.' 组成
+1 <= numRows <= 1000
+</code></pre>
+</details>
+
+```java
+public class Solution0006_plus {
+
+    //6. Z 字形变换
+    public static String convert(String s, int numRows) {
+        //numRows行对应numRows个StringBuild
+        if(numRows == 1) return s;
+        StringBuilder[] strs = new StringBuilder[numRows];
+        for(int i=0; i<numRows; i++) strs[i] = new StringBuilder();
+
+        int index = 0;
+        int sign = 1;
+        for(char c:s.toCharArray()){
+            strs[index].append(c);
+            index += sign;
+            if(index==0 || index==numRows-1){
+                sign = -sign;
+            }
+        }
+
+        StringBuilder result = new StringBuilder();
+        for(int i=0; i<numRows; i++){
+            result.append(strs[i]);
+        }
+
+        return result.toString();
+    }
+
+    public static void main(String[] args){
+        System.out.print(convert("PAYPALISHIRING", 3));
+    }
+}
+```
+
+### 7.整数反转
+
+#### int型整数溢出判定方法
+
+<details>
+<summary>题目</summary>
+<pre><code>
+给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
+如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。
+假设环境不允许存储 64 位整数（有符号或无符号）。
+示例 1：
+输入：x = 123
+输出：321
+示例 2：
+输入：x = -123
+输出：-321
+示例 3：
+输入：x = 120
+输出：21
+示例 4：
+输入：x = 0
+输出：0
+提示：
+-2^31 <= x <= 2^31 - 1
+1 <= numRows <= 1000
+</code></pre>
+</details>
+
+```java
+public class Solution0007 {
+
+    //7. 整数反转
+    /*
+    2^31-1=2147483647
+    -2^31=-2147483648
+           1534236469
+           9646324351
+     */
+
+    public static int reverse(int x) {
+        int result = 0;
+//        int num_flag = x>0?1:-1;
+        while (x != 0){
+            int remainder = x%10;
+            /*
+            if((result*10 + remainder)<Integer.MIN_VALUE || (result*10 + remainder)>Integer.MAX_VALUE)
+                return 0;
+            当result*10 + remainder溢出时，他仍然是整数类型，32位，溢出位丢失，导致判定失败
+            换位思考，将不等式两边同时除以10即可
+            即
+            result + remainder/10<Integer.MIN_VALUE/10
+            和result + remainder/10>Integer.MAX_VALUE/10
+
+            进一步等价于
+            result<Integer.MIN_VALUE/10
+            和result>Integer.MAX_VALUE/10
+             */
+            if(result<Integer.MIN_VALUE/10 || result>Integer.MAX_VALUE/10)
+                return 0;
+            result = result*10 + remainder;
+            x /= 10;
+        }
+        return result;
+        /*
+        失败案例
+        9646324351越界了
+         */
+//        int zero_flag = 1;
+//        int num_flag = x>0?1:-1;
+//        x = x>0?x:-x;
+//        StringBuilder builder = new StringBuilder();
+//
+//        while (x>=10){
+//            int remainder = x%10;
+//            x /= 10;
+//            if(remainder == 0 && zero_flag == 1){
+//                continue;
+//            }else if(remainder != 0){
+//                zero_flag = 0;
+//            }
+//            builder.append(String.valueOf(remainder));
+//        }
+//        builder.append(String.valueOf(x));
+//
+//        int result = num_flag*Integer.valueOf(builder.toString());
+//        if(result<(-1*1L<<32) || result>(1L<<32)-1) return 0;
+//
+//        System.out.print(num_flag>0?"":"-");
+//        System.out.print(builder.toString());
+//        System.out.println();
+//
+//        return result;
+    }
+
+    public static void main(String[] args){
+//        System.out.println(reverse(123));
+//        System.out.println(reverse(-123));
+        System.out.println(reverse(1534236469));
+//        System.out.println(reverse(0));
+        /*
+        2^31-1=2147483647
+        -2^31=-2147483648
+        9646324351
+        2147483647
+
+         */
+//        System.out.println(Integer.MAX_VALUE);
+//        System.out.println(Integer.MIN_VALUE);
+    }
+}
+```
 
 ### 2.两数之和
 
