@@ -1,5 +1,3 @@
-
-
 public class Solution0000_Template {
 
     //x.xxx
