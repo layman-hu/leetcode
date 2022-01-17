@@ -1,4 +1,4 @@
-public class Solution0000_Test {
+public class Solution9999_Test {
 
     public int myAtoi(String str) {
         int len = str.length();
@@ -53,7 +53,7 @@ public class Solution0000_Test {
 
 
     public static void main(String[] args){
-        Solution0000_Test test = new Solution0000_Test();
+        Solution9999_Test test = new Solution9999_Test();
         System.out.println(test.myAtoi("+-12"));
     }
 }

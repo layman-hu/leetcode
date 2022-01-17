@@ -1,4 +1,4 @@
-public class Solution0000_Template {
+public class Solution9999_Template {
 
     //x.xxx
 
