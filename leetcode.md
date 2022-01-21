@@ -636,13 +636,243 @@ public class Solution0007 {
 }
 ```
 
+
+
+### 8. 字符串转换整数 (atoi)
+
+#### int型整数溢出判定方法
+
+```java
+public class Solution0008 {
+
+    //8. 字符串转换整数 (atoi)
+    public static int myAtoi(String s) {
+
+        int num = 0;
+        int sign_flag = 1;
+        int sign_num = 0;//符号个数，+-12输出0，你敢信
+        int num_flag = 0;
+        for(char c:s.toCharArray()){
+            if(c == ' ' && num_flag == 0 && sign_num == 0) continue;
+            if(c == '+' && num_flag == 0){
+                sign_num++;
+                continue;
+            }
+            if(c == '-' && num_flag == 0) {
+                sign_flag = -1;
+                sign_num++;
+                continue;
+            }
+            else if(c>='0' && c<='9'){
+                if(sign_num>1) return 0;
+
+                //Integer.MIN_VALUE = -2147483648
+                if(sign_flag == -1 ){
+                    if(num < Integer.MIN_VALUE/10)
+                        return Integer.MIN_VALUE;
+                    if(num == Integer.MIN_VALUE/10 && (c-'0')>8)
+                        return Integer.MIN_VALUE;
+                }
+
+                //Integer.MAX_VALUE = 2147483647
+                if(num > Integer.MAX_VALUE/10) return Integer.MAX_VALUE;
+                if(num == Integer.MAX_VALUE/10 && (c-'0')>7) return Integer.MAX_VALUE;
+
+                num = num*10 + ((sign_flag>0)?(c-'0'):-(c-'0'));
+                num_flag = 1;
+            }else return (num_flag == 0)?0:num;
+        }
+        return num;
+    }
+
+    public static void main(String[] args){
+        System.out.println(myAtoi(" + 123"));
+        System.out.println(-2147483648);
+    }
+}
+```
+
+
+
+### 9. 回文数
+
+```java
+public class Solution0009 {
+
+    //9. 回文数
+    public boolean isPalindrome(int x) {
+        /*
+        反转数字的位数已经达到原始数字位数的一半？
+        由于整个过程我们不断将原始数字除以 10，
+        然后给反转后的数字乘上 10，
+        所以，当原始数字小于或等于反转后的数字时，
+        就意味着我们已经处理了一半位数的数字了。
+
+        记录官方题解思路，代码中我没有去实现
+         */
+
+
+        if(x<0) return false;//负数直接不是回文数
+        int num_len = 0;
+
+        int x_temp = x;
+        while (x_temp != 0){
+            x_temp /= 10;
+            num_len++;
+        }
+        int half_x = 0;
+
+        /*
+        优化如下
+        if(num_len%2 == 0){//x为偶数个
+            for(int i=0; i<num_len/2; i++){
+                int remainder = x%10;//余数
+                half_x = 10*half_x + remainder;
+                x /= 10;
+            }
+            return (x - half_x == 0)?true:false;
+        }else {
+            for(int i=0; i<num_len/2; i++){
+                int remainder = x%10;//余数
+                half_x = 10*half_x + remainder;
+                x /= 10;
+            }
+            x /= 10;
+            return (x - half_x == 0)?true:false;
+        }
+        */
+        for(int i=0; i<num_len/2; i++){
+            int remainder = x%10;//余数
+            half_x = 10*half_x + remainder;
+            x /= 10;
+        }
+        if(num_len%2==1) x /= 10;
+        return (x - half_x == 0)?true:false;
+    }
+
+    public static void main(String[] args){
+        Solution0009 solution0009 = new Solution0009();
+        System.out.println(solution0009.isPalindrome(-101));
+    }
+}
+```
+
+
+
+### 10. 正则表达式匹配
+
+#### 动态规划
+
+```java
+public class Solution0010 {
+
+    //10. 正则表达式匹配
+    public boolean isMatch(String s, String p) {
+        boolean table[][] = new boolean[s.length()+1][p.length()+1];
+
+        table[0][0] = true;
+
+        //初始化第一行
+        for(int j=1; j<table[0].length; j++){
+            char c = p.charAt(j-1);
+            if(j>1){
+                if(c == '*')
+                    table[0][j] = table[0][j-2];
+                else table[0][j] = false;
+            }else {
+                //此时，*前无字符，*代表0个字符
+                if(c == '*')
+                    table[0][j] = true;
+            }
+        }
+
+        //生成第二行至最后一行
+        for(int i=1; i<table.length; i++){
+            char ch1 = s.charAt(i-1);
+            for(int j=1; j<table[i].length; j++){
+                char ch2 = p.charAt(j-1);
+                if(ch2 == '.' || ch2 == ch1){
+                    table[i][j] = table[i-1][j-1];
+                }else if(ch2 == '*'){
+                    if(j>1){
+                        if(table[i][j-2])
+                            table[i][j] = true;
+                        else {
+                            char pre = p.charAt(j-2);
+                            if(pre == ch1 || pre == '.'){
+                                table[i][j] = table[i-1][j];
+                            }
+//                            else table[i][j] =false;
+                        }
+                    }
+                }
+
+
+            }
+        }
+        boolean lastRow[] = table[table.length-1];
+        return lastRow[lastRow.length-1];
+    }
+
+    public static void main(String[] args){
+        Solution0010 solution = new Solution0010();
+//        System.out.println(solution.isMatch("ab",".*"));
+//        System.out.println(solution.isMatch("aab","c*a*b"));
+        System.out.println(solution.isMatch("mississippi","mis*is*p*."));
+
+    }
+}
+```
+
+
+
+### 11. 盛最多水的容器
+
+#### 双指针
+
+```java
+public class Solution0011 {
+
+    //11. 盛最多水的容器
+
+    /*
+    双指针
+    area = max{min{height[i],height[j]} * Math.abs(j-i) |i,j属于height.lenght}
+     */
+    public int maxArea(int[] height) {
+        int p=0, q=height.length-1;//p和q分别为头尾指针
+        int max = 0;
+
+        while (p<q){
+            int min_height = height[p]<height[q]?height[p]:height[q];
+            max = max>min_height*(q-p)?max:min_height*(q-p);
+            if(height[p]<height[q]){
+                p++;
+            }else q--;
+        }
+        return max;
+    }
+
+    public static void main(String[] args){
+        Solution0011 solution = new Solution0011();
+//        int nums[] = {1,8,6,2,5,4,8,3,7};
+//        int nums[] = {1,1};
+        int nums[] = {1,2,1};
+//        int nums[] = {1,8,6,2,5,4,8,3,7};
+
+
+        System.out.println(solution.maxArea(nums));
+    }
+}
+```
+
+
+
 ### 2.两数之和
 
 #### 单链表操作，大数相加
 
-### XXXXXXX
-
-#### xxxxx
+#### 
 
 
 
