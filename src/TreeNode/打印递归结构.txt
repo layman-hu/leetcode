@@ -1,0 +1,24 @@
+    int depth = 0;
+    int count = -1;//打印递归的计数器
+
+    public void printRecursion(int node_val, int depth, int count){
+        for(int i=0; i<count; i++){
+            System.out.print("\t");
+        }
+        System.out.println("val:"+node_val+" depth:"+depth);
+    }
+
+    public int maxDepth(TreeNode root) {
+            if(root == null)return 0;
+            count++;
+            printRecursion(root.val,depth,count);
+
+            int left_depth = maxDepth(root.left);
+            int right_depth = maxDepth(root.right);
+            //后序遍历
+            depth = (left_depth>right_depth)?left_depth+1:right_depth+1;
+
+            printRecursion(root.val,depth,count);
+            count--;
+            return depth;
+    }
