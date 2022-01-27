@@ -1,3 +1,5 @@
+package solution0000_0014;
+
 import java.util.HashMap;
 
 public class Solution0003 {

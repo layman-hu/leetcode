@@ -1,3 +1,5 @@
+package solution0000_0014;
+
 public class Solution0009 {
 
     //9. 回文数

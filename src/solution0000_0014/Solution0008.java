@@ -1,3 +1,5 @@
+package solution0000_0014;
+
 public class Solution0008 {
 
     //8. 字符串转换整数 (atoi)

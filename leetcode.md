@@ -28,7 +28,7 @@
 </details>
 
 ```java
-public class Solution0001 {
+public class solution0000_0014.Solution0001 {
     //1.哈希表
     public static int[] twoSum(int[] nums, int target) {
         int len = nums.length;
@@ -100,7 +100,7 @@ public class Solution0001 {
 </details>
 
 ```java
-public class Solution0002 {
+public class solution0000_0014.Solution0002 {
 
 
     //2.大数相加，链表
@@ -202,7 +202,7 @@ s 由英文字母、数字、符号和空格组成
 </details>
 
 ```java
-public class Solution0003 {
+public class solution0000_0014.Solution0003 {
 
     //3. 无重复字符的最长子串
     /*
@@ -294,7 +294,7 @@ nums2.length == n
 </details>
 
 ```java
-public class Solution0004 {
+public class solution0000_0014.Solution0004 {
 
     //4. 寻找两个正序数组的中位数
     public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
@@ -401,7 +401,7 @@ s 仅由数字和英文字母（大写和/或小写）组成
 </details>
 
 ```java
-public class Solution0005 {
+public class solution0000_0014.Solution0005 {
 
     //5. 最长回文子串
     public static String longestPalindrome(String s) {
@@ -491,7 +491,7 @@ s 由英文字母（小写和大写）、',' 和 '.' 组成
 </details>
 
 ```java
-public class Solution0006_plus {
+public class solution0000_0014.Solution0006_plus {
 
     //6. Z 字形变换
     public static String convert(String s, int numRows) {
@@ -553,7 +553,7 @@ public class Solution0006_plus {
 </details>
 
 ```java
-public class Solution0007 {
+public class solution0000_0014.Solution0007 {
 
     //7. 整数反转
     /*
@@ -643,7 +643,7 @@ public class Solution0007 {
 #### int型整数溢出判定方法
 
 ```java
-public class Solution0008 {
+public class solution0000_0014.Solution0008 {
 
     //8. 字符串转换整数 (atoi)
     public static int myAtoi(String s) {
@@ -697,7 +697,7 @@ public class Solution0008 {
 ### 9. 回文数
 
 ```java
-public class Solution0009 {
+public class solution0000_0014.Solution0009 {
 
     //9. 回文数
     public boolean isPalindrome(int x) {
@@ -751,7 +751,7 @@ public class Solution0009 {
     }
 
     public static void main(String[] args){
-        Solution0009 solution0009 = new Solution0009();
+        solution0000_0014.Solution0009 solution0009 = new solution0000_0014.Solution0009();
         System.out.println(solution0009.isPalindrome(-101));
     }
 }
@@ -764,7 +764,7 @@ public class Solution0009 {
 #### 动态规划
 
 ```java
-public class Solution0010 {
+public class solution0000_0014.Solution0010 {
 
     //10. 正则表达式匹配
     public boolean isMatch(String s, String p) {
@@ -815,7 +815,7 @@ public class Solution0010 {
     }
 
     public static void main(String[] args){
-        Solution0010 solution = new Solution0010();
+        solution0000_0014.Solution0010 solution = new solution0000_0014.Solution0010();
 //        System.out.println(solution.isMatch("ab",".*"));
 //        System.out.println(solution.isMatch("aab","c*a*b"));
         System.out.println(solution.isMatch("mississippi","mis*is*p*."));
@@ -831,7 +831,7 @@ public class Solution0010 {
 #### 双指针
 
 ```java
-public class Solution0011 {
+public class solution0000_0014.Solution0011 {
 
     //11. 盛最多水的容器
 
@@ -854,7 +854,7 @@ public class Solution0011 {
     }
 
     public static void main(String[] args){
-        Solution0011 solution = new Solution0011();
+        solution0000_0014.Solution0011 solution = new solution0000_0014.Solution0011();
 //        int nums[] = {1,8,6,2,5,4,8,3,7};
 //        int nums[] = {1,1};
         int nums[] = {1,2,1};
