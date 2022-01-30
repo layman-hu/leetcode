@@ -15,7 +15,7 @@ public class Solution0104 {
             this.right = right;
         }
     }
-    int result = 0;
+    int depth = 0;
     int count = 0;//打印递归的计数器
 
     public void printRecursion(int val, int depth, int count){
@@ -29,16 +29,16 @@ public class Solution0104 {
     public int maxDepth(TreeNode root) {
         if(root == null)return 0;
         count++;
-        printRecursion(root.val,result,count);
+        printRecursion(root.val,depth,count);
 
         int left_depth = maxDepth(root.left);
         int right_depth = maxDepth(root.right);
         //后序遍历
-        result = (left_depth>right_depth)?left_depth+1:right_depth+1;
+        depth = (left_depth>right_depth)?left_depth+1:right_depth+1;
 
-        printRecursion(root.val,result,count);
+        printRecursion(root.val,depth,count);
         count--;
-        return result;
+        return depth;
     }
 
 
