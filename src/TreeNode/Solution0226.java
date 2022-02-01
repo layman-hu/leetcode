@@ -2,7 +2,7 @@ package TreeNode;
 
 
 
-public class Solution0104 {
+public class Solution0226 {
     public static class TreeNode {
         int val;
         TreeNode left;
@@ -15,8 +15,8 @@ public class Solution0104 {
             this.right = right;
         }
     }
-    int depth = 0;
-    int count = -1;//打印递归的计数器
+    static int depth = 0;
+    static int count = -1;//打印递归的计数器
 
     public void printRecursion(int val, int depth, int count){
         for(int i=0; i<count; i++){
@@ -25,7 +25,7 @@ public class Solution0104 {
         System.out.println("val:"+val+" depth:"+depth);
     }
 
-    //104. 二叉树的最大深度
+    //226. 翻转二叉树
     public int maxDepth(TreeNode root) {
         if(root == null)return 0;
         count++;
@@ -41,24 +41,43 @@ public class Solution0104 {
         return depth;
     }
 
+    public static TreeNode invertTree(TreeNode root) {
+        if(root == null) return null;
+
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+
+        invertTree(root.left);
+        invertTree(root.right);
+
+        return root;
+    }
+
 
     public static void main(String[] args){
-        Solution0104 solution = new Solution0104();
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node9 = new TreeNode(9);
-        TreeNode node20 = new TreeNode(20);
-        TreeNode node15 = new TreeNode(15);
+        Solution0226 solution = new Solution0226();
+        TreeNode node4 = new TreeNode(4);
+        TreeNode node2 = new TreeNode(2);
         TreeNode node7 = new TreeNode(7);
+        TreeNode node1 = new TreeNode(1);
+        TreeNode node3 = new TreeNode(3);
+        TreeNode node6 = new TreeNode(6);
+        TreeNode node9 = new TreeNode(9);
 
-        node3.left = node9;
-        node3.right = node20;
-        node9.left = null;
-        node9.right = null;
-        node20.left = node15;
-        node20.right = node7;
+        node4.left = node2;
+        node4.right = node7;
+        node2.left = node1;
+        node2.right = node3;
+        node7.left = node6;
+        node7.right = node9;
 
 
+        System.out.println(solution.maxDepth(node4));
 
-        System.out.println(solution.maxDepth(node3));
+        depth = 0;
+        count = -1;
+
+        System.out.println(solution.maxDepth(invertTree(node4)));;
     }
 }

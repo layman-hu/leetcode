@@ -18,7 +18,7 @@ public class Solution0144 {
         }
     }
     int depth = 0;
-    int count = 0;//打印递归的计数器
+    int count = -1;//打印递归的计数器
     List<Integer> preamble_nums = new ArrayList<>();
 
     public void printRecursion(int val, int depth, int count){
